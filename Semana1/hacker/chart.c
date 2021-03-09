@@ -28,31 +28,31 @@ void main() {
   int maxF2 = ((float)calcF2 / (float)100) * max;
 
   //printf("%i %i %i %i\n", maxM1, maxF1, maxM2, maxF2);
+  printf("M-F: ");
 
   for(unsigned i = 0; i < maxM1; i++) {
-    printf("%c%c%c\n", 35,35,35);
+    printf("%c", 35);
   }
 
-  printf("M-F\n\n");
+  printf("\n\nF-M: ");
 
   for(unsigned i = 0; i < maxF1; i++) {
-    printf("%c%c%c\n", 35,35,35);
+    printf("%c", 35);
   }
 
-  printf("F-M\n\n");
+  printf("\n\nM-M: ");
 
   for(unsigned i = 0; i < maxM2; i++) {
-    printf("%c%c%c\n", 35,35,35);
+    printf("%c", 35);
   }
 
-  printf("M-M\n\n");
+  printf("\n\nF-F: ");
 
   for(unsigned i = 0; i < maxF2; i++) {
-    printf("%c%c%c\n", 35,35,35);
+    printf("%c", 35);
   }
 
-  printf("F-F\n\n");
-
+  printf("\n\n");
   // int calcM1 = 100 - ((((float)soma / (float)M1) -1) * 100);
   // int calcF1 = 100 - ((((float)soma / (float)F1) -1) * 100);
   // int calcF2 = (((float)soma / (float)F2) -1) * 100;

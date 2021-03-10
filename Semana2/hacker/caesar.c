@@ -1,15 +1,15 @@
 #include <cc50.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
+void crypto(char*, int);
 
 int main(int argc, char *argv[]) {
   int k = atoi(argv[1]);
   FILE *f;
   char linha[1000];
-  char c = [1000];
 
-  printf("%i\n", k);
   printf("Insira o nome do arquivo para criptografar: \n");
   string texto = GetString();
 
@@ -20,5 +20,31 @@ int main(int argc, char *argv[]) {
 
   fgets(linha, 1000, f);
 
-  printf("%s", linha);
+  crypto(linha, k);
+}
+
+void crypto(char *linha, int k) {
+  int c = 0;
+
+  for(int i = 0; i < strlen(linha); i++) {
+    if(linha[i] == 32) {
+      printf(" ");
+    }
+
+    if(linha[i] <= 90) {
+      if((linha[i] + k) > 90) {
+        c = linha[i] - 26;
+        c = c + k;
+        printf("%c", c);
+      }
+    } else if((linha[i] + k) > 122) {
+      c = linha[i] - 26;
+      c = c + k;
+      printf("%c", c);
+    } else {
+      c = linha[i] + k;
+
+    printf("%c", c);
+    }
+  }
 }

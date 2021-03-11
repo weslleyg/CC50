@@ -6,6 +6,11 @@
 void crypto(char*, int);
 
 int main(int argc, char *argv[]) {
+
+  if(argc == 1 || argc == 3) {
+    return 1;
+  }
+
   int k = atoi(argv[1]);
   FILE *f;
   char linha[1000];
@@ -27,12 +32,11 @@ void crypto(char *linha, int k) {
   int c = 0;
 
   for(int i = 0; i < strlen(linha); i++) {
-    if(linha[i] == 32) {
-      printf(" ");
-    }
-
     if(linha[i] <= 90) {
-      if((linha[i] + k) > 90) {
+      if(linha[i] == 32) {
+        c = linha[i];
+        printf("%c", c);
+      } else if((linha[i] + k) > 90) {
         c = linha[i] - 26;
         c = c + k;
         printf("%c", c);

@@ -36,6 +36,10 @@ void crypto(char *linha, int k) {
         c = linha[i] - 26;
         c = c + k;
         printf("%c", c);
+      } else {
+        c = linha[i] + k;
+
+        printf("%c", c);
       }
     } else if((linha[i] + k) > 122) {
       c = linha[i] - 26;

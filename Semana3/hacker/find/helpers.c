@@ -36,11 +36,29 @@ search(int value, int array[], int n)
 bool
 sort(int values[], int n)
 {   
+    // int menor = 0;
+    int count = 0;
     for(int i = 0; i < n; i++) {
-        if(values[i] <= values[i + 1]) {
-            printf("%i", values[i]);
+    
+        count = values[i + 1];
+
+        if(values[i] > count) {
+            if(count == 0) {
+                count = values[i];
+            }
+
+            values[i + 1] = values[i];
+            values[i] = count;
+        } else {
+            count = values[i];
         }
+        printf("%i", values[i]);
+
+        printf("count: %i ", count);
     }
 
     return false;
 }
+
+
+// enquanto i não comparar com todas posições faça

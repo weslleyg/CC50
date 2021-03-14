@@ -8,6 +8,7 @@
  ***************************************************************************/
        
 #include <cc50.h>
+#include <stdio.h>
 
 #include "helpers.h"
 
@@ -34,7 +35,12 @@ search(int value, int array[], int n)
 
 bool
 sort(int values[], int n)
-{
-    // TODO: implement an O(n) sort
+{   
+    for(int i = 0; i < n; i++) {
+        if(values[i] <= values[i + 1]) {
+            printf("%i", values[i]);
+        }
+    }
+
     return false;
 }

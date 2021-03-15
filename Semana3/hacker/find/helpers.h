@@ -17,6 +17,9 @@
 bool 
 search(int value, int values[], int n);
 
+int
+binarySearch(int values[], int first, int lastOne, int value);
+
 
 /*
  * Sorts array of n values.  Returns true if

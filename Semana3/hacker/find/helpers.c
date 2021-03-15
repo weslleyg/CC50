@@ -20,13 +20,31 @@
 bool 
 search(int value, int array[], int n)
 {
-    // TODO: re-implement as binary search
-    for (int i = 0; i < n; i++)
-        if (array[i] == value)
-            return true;
-    return false;
+    int result = binarySearch(array, 0, n, value);
+
+    if(result == value) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
+int binarySearch(int values[], int first, int lastOne, int value) 
+{
+    int media = (first + lastOne) / 2;
+    
+    if(values[media] == value) {
+        return values[media];
+    }
+
+    if(values[first] == values[lastOne]) {
+        return values[first];
+    } else if(values[media] < value) {
+        return binarySearch(values, media +1, lastOne ,value);
+    } else {
+        return binarySearch(values, first, media -1, value);
+    }
+}
 
 /*
  * Sorts array of n values.  Returns true if

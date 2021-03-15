@@ -38,10 +38,13 @@ sort(int values[], int n)
 {   
     int maior = 0;
     //loop para comparar cada posição
-    for(int count = 1; count < n; count++) {
+    for(int count = 1; count < n; count++) 
+    {
         //loop para compara o numero de uma posição com todas as outas
-        for(int i = 0; i < n - 1; i++) {
-            if(values[i] > values[i + 1]) {
+        for(int i = 0; i < n - 1; i++) 
+        {
+            if(values[i] > values[i + 1]) 
+            {
                 maior = values[i];
 
                 values[i] = values[i +1];
@@ -50,10 +53,14 @@ sort(int values[], int n)
             }
         }
     }
-    //imprimi cada posição do array ordenado
-    for(int i = 0; i < n; i++) {
-        printf(" %i ", values[i]);
+    //compara se está ordenado
+    for(int i = 0; i < n -1; i++) 
+    {
+        if(values[i] > values[i +1]) 
+        {
+            return false;
+        }
     }
 
-    return false;
+    return true;
 }

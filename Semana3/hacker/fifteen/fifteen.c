@@ -65,7 +65,6 @@ main(int argc, char *argv[])
          DIM_MIN, DIM_MIN, DIM_MAX, DIM_MAX);
         return 2;
     }
-
     // initialize the board
     init();
 
@@ -138,7 +137,15 @@ greet(void)
 void
 init(void)
 {
-    // TODO
+    int max = (d*d) -1;
+
+    srand(max);
+
+    for(int i = 0; i < d; i++) {
+        for(int i = 1; i <= max; i++) {
+            board[i][i] = rand() % max-1;
+        }
+    }
 }
 
 
@@ -149,7 +156,14 @@ init(void)
 void
 draw(void)
 {
-    // TODO
+    for(int i = 0; i < d; i++) {
+        for(int j = 0; j < d; j++) {
+            printf("  %i  ", board[i][j]);
+            if(j == (d - 1)) {
+                printf("\n\n");
+            }
+        }
+    }
 }
 
 

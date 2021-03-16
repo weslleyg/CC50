@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
 
 // constants
@@ -139,11 +140,15 @@ init(void)
 {
     int max = (d*d) -1;
 
-    srand(max);
+    srand(time(NULL));
+
+    printf("%i", max);
 
     for(int i = 0; i < d; i++) {
-        for(int i = 1; i <= max; i++) {
-            board[i][i] = rand() % max-1;
+        for(int j = 0; j < d; j++) {
+            for(int k = 1; k <= max; k++) {
+                board[i][j] = rand() % 100;
+            }
         }
     }
 }
@@ -158,7 +163,7 @@ draw(void)
 {
     for(int i = 0; i < d; i++) {
         for(int j = 0; j < d; j++) {
-            printf("  %i  ", board[i][j]);
+            printf("  %i\t", board[i][j]);
             if(j == (d - 1)) {
                 printf("\n\n");
             }

@@ -20,6 +20,7 @@
 #include <cc50.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <time.h>
 
@@ -73,7 +74,7 @@ main(int argc, char *argv[])
     while (true)
     {
         // clear the screen
-        clear();
+        //clear();
 
         // draw the current state of the board
         draw();
@@ -139,20 +140,14 @@ void
 init(void)
 {
     int max = (d*d) -1;
-
     srand(time(NULL));
-
-    printf("%i", max);
 
     for(int i = 0; i < d; i++) {
         for(int j = 0; j < d; j++) {
-            for(int k = 1; k <= max; k++) {
-                board[i][j] = rand() % 100;
-            }
+            board[i][j] = max--;
         }
     }
 }
-
 
 /* 
  * Prints the board in its current state.
@@ -163,7 +158,11 @@ draw(void)
 {
     for(int i = 0; i < d; i++) {
         for(int j = 0; j < d; j++) {
-            printf("  %i\t", board[i][j]);
+            if(board[i][j] == 0) {
+                printf("  _");
+            } else {
+                printf("%3i\t", board[i][j]);
+            }
             if(j == (d - 1)) {
                 printf("\n\n");
             }
@@ -193,6 +192,15 @@ move(int tile)
 bool
 won(void)
 {
-    // TODO
-    return false;
+    int count = 0;
+    int max = (d*d) -1;
+
+    for(int i = 0; i < d; i++) {
+        for(int j = 0; j < d; j++) {
+            if(count++ != max && board[i][j] != count){
+                return false;
+            }
+        }
+    }
+    return true;
 }

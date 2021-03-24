@@ -1,3 +1,25 @@
+Perguntas
+
+I. Repare que main chama strcmp. O que significa se strcmp, após receber duas strings como
+argumentos, retornar 0? (Dica: RTFM)
+
+II. Como você reescreveria a linha abaixo, extraída de main, usando if e else?
+int max = (!strcmp(g.level, "debug")) ? 9 : 1024;
+
+III. Em que circunstâncias o uso de sscanf abaixo, extraído de main, retorna 2 em vez de 1?
+sscanf(argv[2], " %d %c", &g.number, &c)
+
+IV. Que atributos de g representam as coordenadas onde cursor do usuário está?
+
+V. Qual função (que nós escrevemos) você pode chamar para levar o cursor para essas
+coordenadas? (Dica: nós lhe dissemos alguns parágrafos atrás)
+
+VI. Perto de que linha de main você poderia adicionar elementos case para lidar com outras
+teclas além de N, R, e ctrl-L? 
+
+VII. A maioria das placas n00b e l33t têm muitos espaços em branco. Mas quantos espaços em
+branco tem debug #1? E debug #2? E debug #9?
+
 Respostas
 
 1: Sim pois ela recebeu os dois argumentos necessarios 

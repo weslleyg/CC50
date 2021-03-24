@@ -1,0 +1,22 @@
+Respostas
+
+1: Sim pois ela recebeu os dois argumentos necessarios 
+   para serem comparados.
+
+2: int max = 0;
+   if(!strcmp(g.level, "debug") {
+     max = 9;
+   } else {
+     max = 1024;
+   }
+
+3: quando o argumento não for parecido com o determinado.
+
+4: os inteiros x e y.
+
+5: a função show_cursor.
+
+6: Proximo da linha 164.
+
+7: Somente 1 espaço em branco por tabela.
+

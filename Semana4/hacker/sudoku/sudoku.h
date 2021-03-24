@@ -8,25 +8,25 @@
  ***************************************************************************/
 
 // game's author
-#define AUTHOR "John Harvard"
+#define AUTHOR "Weslley"
 
 // game's title
-#define TITLE "Sudoku"
+#define TITLE "Sudokuuuuu"
 
 // banner's colors
 #define FG_BANNER COLOR_CYAN
 #define BG_BANNER COLOR_BLACK
 
 // grid's colors
-#define FG_GRID COLOR_WHITE
+#define FG_GRID COLOR_GREEN
 #define BG_GRID COLOR_BLACK
 
 // border's colors
 #define FG_BORDER COLOR_WHITE
-#define BG_BORDER COLOR_RED
+#define BG_BORDER COLOR_GREEN
 
 // logo's colors
-#define FG_LOGO COLOR_YELLOW
+#define FG_LOGO COLOR_GREEN
 #define BG_LOGO COLOR_BLACK
 
 // nicknames for pairs of colors

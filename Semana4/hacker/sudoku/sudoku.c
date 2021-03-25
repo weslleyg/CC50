@@ -224,11 +224,9 @@ main(int argc, char *argv[])
             
             case KEY_LEFT:
                 for(int i = 0; i <= 3; i++) {
-                    for(int j = 0; j <= 25; j++) {
-                        if(y == (top + j + 4 * i)  && x == left) {
+                    for(int j = 0; j <= 12; j++) {
+                        if(y == top + j && x == (left + j + 1 * i) - j) {
                             x += 2;
-                        } else if(y == (top + j + 4 * i) && x == left - 8) {
-                            x--;
                         }
                     }
                 }
@@ -237,6 +235,13 @@ main(int argc, char *argv[])
                 break;
 
             case KEY_RIGHT:
+                for(int i = 0; i <= 3; i++) {
+                    for(int j = 0; j <= 12; j++) {
+                        if(y == top + j && x == (left + i + 10 * i)) {
+                            x -= 2;
+                        }
+                    }
+                }
                 x += 2;
                 move(y, x);
                 break;

@@ -150,6 +150,13 @@ main(int argc, char *argv[])
     int x = g.left + 2 + 2*(g.x + g.x/3);
     int y = g.top + g.y + 1 + g.y/3;
 
+    int maxy, maxx;
+    getmaxyx(stdscr, maxy, maxx);
+
+    // determine where top-left corner of board belongs 
+    int top = maxy/2 - 7;
+    int left = maxx/2 - 30;
+
     do
     {
         // refresh the screen
@@ -188,16 +195,43 @@ main(int argc, char *argv[])
                 break;
             
             case KEY_UP:
+                for(int i = 0; i <= 3; i++) {
+                    for(int j = 0; j <= 25; j++) {
+                        if(y == (top + 0 + 4 * 0) +1 && x == (left + j)) {
+                            y++;
+                        } else if(y == (top + 0 + 4 * i) +1 && x == (left + j)) {
+                            y--;
+                        }
+                    }
+                }
                 y--;
                 move(y, x);
                 break;
 
             case KEY_DOWN:
+                for(int i = 0; i <= 3; i++) {
+                    for(int j = 0; j <= 25; j++) {
+                        if(y == (top + 4 * 3) - 1 && x == (left + j)) {
+                            y--;
+                        } else if(y == (top + 0 + 4 * i) - 1 && x == (left + j)) {
+                            y++;
+                        }
+                    }
+                }
                 y++;
                 move(y, x);
                 break;
             
             case KEY_LEFT:
+                for(int i = 0; i <= 3; i++) {
+                    for(int j = 0; j <= 25; j++) {
+                        if(y == (top + j + 4 * i)  && x == left) {
+                            x += 2;
+                        } else if(y == (top + j + 4 * i) && x == left - 8) {
+                            x--;
+                        }
+                    }
+                }
                 x -= 2;
                 move(y ,x);
                 break;

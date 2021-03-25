@@ -181,6 +181,22 @@ main(int argc, char *argv[])
                     return 6;
                 }
                 break;
+            
+            case KEY_UP:
+                move(g.top + g.y - 1 + g.y/2, g.left + 2 + 2*(g.x + g.x/3));
+                break;
+
+            case KEY_DOWN:
+                move(g.top + g.y + 2 + g.y/3, g.left + 2 + 2*(g.x + g.x/3));
+                break;
+            
+            case KEY_LEFT:
+                move(g.top + g.y + 1 + g.y/3, g.left - 2 + 2*(g.x + g.x/2));
+                break;
+
+            case KEY_RIGHT:
+                move(g.top + g.y + 1 + g.y/3, g.left - 1 + 3*(g.x + g.x/3));
+                break;
 
             // let user manually redraw screen with ctrl-L
             case CTRL('l'):
@@ -515,7 +531,7 @@ restart_game(void)
 
 void
 show_cursor(void)
-{
+{   
     // restore cursor's location
     move(g.top + g.y + 1 + g.y/3, g.left + 2 + 2*(g.x + g.x/3));
 }

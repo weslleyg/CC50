@@ -147,6 +147,9 @@ main(int argc, char *argv[])
 
     // let the user play!
     int ch;
+    int x = g.left + 2 + 2*(g.x + g.x/3);
+    int y = g.top + g.y + 1 + g.y/3;
+
     do
     {
         // refresh the screen
@@ -173,7 +176,9 @@ main(int argc, char *argv[])
                 break;
 
             // restart current game
-            case 'R': 
+            case 'R':
+                x = g.left + 2 + 2*(g.x + g.x/3);
+                y = g.top + g.y + 1 + g.y/3;
                 if (!restart_game())
                 {
                     shutdown();
@@ -183,19 +188,23 @@ main(int argc, char *argv[])
                 break;
             
             case KEY_UP:
-                move(g.top + g.y - 1 + g.y/2, g.left + 2 + 2*(g.x + g.x/3));
+                y--;
+                move(y, x);
                 break;
 
             case KEY_DOWN:
-                move(g.top + g.y + 2 + g.y/3, g.left + 2 + 2*(g.x + g.x/3));
+                y++;
+                move(y, x);
                 break;
             
             case KEY_LEFT:
-                move(g.top + g.y + 1 + g.y/3, g.left - 2 + 2*(g.x + g.x/2));
+                x -= 2;
+                move(y ,x);
                 break;
 
             case KEY_RIGHT:
-                move(g.top + g.y + 1 + g.y/3, g.left - 1 + 3*(g.x + g.x/3));
+                x += 2;
+                move(y, x);
                 break;
 
             // let user manually redraw screen with ctrl-L

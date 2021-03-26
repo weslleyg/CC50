@@ -40,5 +40,76 @@ Respostas
 
 6: Proximo da linha 164.
 
-7: Somente 1 espaço em branco por tabela.
+7: O numero de espaço em branco é o numero de parametro para o debug.
+
+
+
+
+case KEY_UP:
+                for(int i = 0; i <= 3; i++) {
+                    for(int j = 0; j <= 25; j++) {
+                        if(y == (top + 0 + 4 * 0) +1 && x == (left + j)) {
+                            y++;
+                        } else if(y == (top + 0 + 4 * i) +1 && x == (left + j)) {
+                            y--;
+                        }
+                    }
+                }
+                y--;
+                move(y, x);
+                break;
+
+            case KEY_DOWN:
+                for(int i = 0; i <= 3; i++) {
+                    for(int j = 0; j <= 25; j++) {
+                        if(y == (top + 4 * 3) - 1 && x == (left + j)) {
+                            y--;
+                        } else if(y == (top + 0 + 4 * i) - 1 && x == (left + j)) {
+                            y++;
+                        }
+                    }
+                }
+                y++;
+                move(y, x);
+                break;
+            
+            case KEY_LEFT:
+                for(int i = 0; i <= 3; i++) {
+                    for(int j = 0; j <= 12; j++) {
+                        if(y == top + j && x == (left + j + 1 * i) - j) {
+                            x += 2;
+                        }
+
+                        if(y == top + j && x == (left + 4 * 2) + 2) {
+                            x -= 2;
+                        }
+
+                        if(y == top + j && x == (left + 4 * 3) + 6) {
+                            x -= 2;
+                        } 
+                    }
+                }
+                x -= 2;
+                move(y ,x);
+                break;
+
+            case KEY_RIGHT:
+                for(int i = 0; i < 6; i++) {
+                    for(int j = 0; j <= 12; j++) {
+                        if(y == top + j && x == (left + i + 10 * i)) {
+                            x -= 2;
+                        }
+
+                        if(y == top + j && x == (left + 3 * 2)) {
+                            x += 2;
+                        }
+
+                        if(y == top + j && x == (left + 4 * 3) + 2) {
+                            x += 2;
+                        } 
+                    }
+                }
+                x += 2;
+                move(y, x);
+                break;
 

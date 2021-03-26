@@ -35,6 +35,8 @@ struct
     // the game's board
     int board[9][9];
 
+    int copyBoard[9][9];
+
     // the board's number
     int number;
 
@@ -61,6 +63,7 @@ void show_banner(char *b);
 void show_cursor(void);
 void shutdown(void);
 bool startup(void);
+void movement(int x, int y, int max);
 
 
 /*
@@ -146,133 +149,11 @@ main(int argc, char *argv[])
     redraw_all();
 
     // let the user play!
-    int ch;
     int x = g.left + 2 + 2*(g.x + g.x/3);
     int y = g.top + g.y + 1 + g.y/3;
 
-    int maxy, maxx;
-    getmaxyx(stdscr, maxy, maxx);
-
     // determine where top-left corner of board belongs 
-    int top = maxy/2 - 7;
-    int left = maxx/2 - 30;
-
-    do
-    {
-        // refresh the screen
-        refresh();
-
-        // get user's input
-        ch = getch();
-
-        // capitalize input to simplify cases
-        ch = toupper(ch);
-
-        // process user's input
-        switch (ch)
-        {
-            // start a new game
-            case 'N': 
-                g.number = rand() % max + 1;
-                if (!restart_game())
-                {
-                    shutdown();
-                    fprintf(stderr, "Could not load board from disk!\n");
-                    return 6;
-                }
-                break;
-
-            // restart current game
-            case 'R':
-                x = g.left + 2 + 2*(g.x + g.x/3);
-                y = g.top + g.y + 1 + g.y/3;
-                if (!restart_game())
-                {
-                    shutdown();
-                    fprintf(stderr, "Could not load board from disk!\n");
-                    return 6;
-                }
-                break;
-            
-            case KEY_UP:
-                for(int i = 0; i <= 3; i++) {
-                    for(int j = 0; j <= 25; j++) {
-                        if(y == (top + 0 + 4 * 0) +1 && x == (left + j)) {
-                            y++;
-                        } else if(y == (top + 0 + 4 * i) +1 && x == (left + j)) {
-                            y--;
-                        }
-                    }
-                }
-                y--;
-                move(y, x);
-                break;
-
-            case KEY_DOWN:
-                for(int i = 0; i <= 3; i++) {
-                    for(int j = 0; j <= 25; j++) {
-                        if(y == (top + 4 * 3) - 1 && x == (left + j)) {
-                            y--;
-                        } else if(y == (top + 0 + 4 * i) - 1 && x == (left + j)) {
-                            y++;
-                        }
-                    }
-                }
-                y++;
-                move(y, x);
-                break;
-            
-            case KEY_LEFT:
-                for(int i = 0; i <= 3; i++) {
-                    for(int j = 0; j <= 12; j++) {
-                        if(y == top + j && x == (left + j + 1 * i) - j) {
-                            x += 2;
-                        }
-
-                        if(y == top + j && x == (left + 4 * 2) + 2) {
-                            x -= 2;
-                        }
-
-                        if(y == top + j && x == (left + 4 * 3) + 6) {
-                            x -= 2;
-                        } 
-                    }
-                }
-                x -= 2;
-                move(y ,x);
-                break;
-
-            case KEY_RIGHT:
-                for(int i = 0; i < 6; i++) {
-                    for(int j = 0; j <= 12; j++) {
-                        if(y == top + j && x == (left + i + 10 * i)) {
-                            x -= 2;
-                        }
-
-                        if(y == top + j && x == (left + 3 * 2)) {
-                            x += 2;
-                        }
-
-                        if(y == top + j && x == (left + 4 * 3) + 2) {
-                            x += 2;
-                        } 
-                    }
-                }
-                x += 2;
-                move(y, x);
-                break;
-
-            // let user manually redraw screen with ctrl-L
-            case CTRL('l'):
-                redraw_all();
-                break;
-        }
-
-        // log input (and board's state) if any was received this iteration
-        if (ch != ERR)
-            log_move(ch);
-    }
-    while (ch != 'Q');
+    movement(x, y, max);
 
     // shut down ncurses
     shutdown();
@@ -427,6 +308,126 @@ draw_numbers(void)
     }
 }
 
+/*
+* Draw the player movement
+*/
+
+void movement(int x, int y, int max) {
+    int ch = 0;
+
+    int maxy, maxx;
+    getmaxyx(stdscr, maxy, maxx);
+
+    // int top = maxy/2 - 7;
+    // int left = maxx/2 - 30;
+
+    do
+    {
+        // refresh the screen
+        refresh();
+
+        // get user's input
+        ch = getch();
+
+        // capitalize input to simplify cases
+        ch = toupper(ch);
+
+        // process user's input
+        switch (ch)
+        {
+            // start a new game
+            case 'N': 
+                g.number = rand() % max + 1;
+                if (!restart_game())
+                {
+                    shutdown();
+                    fprintf(stderr, "Could not load board from disk!\n");
+                }
+                break;
+
+            // restart current game
+            case 'R':
+                x = g.left + 2 + 2*(g.x + g.x/3);
+                y = g.top + g.y + 1 + g.y/3;
+                if (!restart_game())
+                {
+                    shutdown();
+                    fprintf(stderr, "Could not load board from disk!\n");
+                }
+                break;
+            
+            case KEY_UP:
+                if(g.y > 0) {
+                    g.y -= 1;
+                    show_cursor();
+                } else {
+                    g.y = 8;
+                    show_cursor();
+                }
+                break;
+            
+            case KEY_DOWN:
+                if(g.y < 8) {
+                    g.y += 1;
+                    show_cursor();
+                } else {
+                    g.y = 0;
+                    show_cursor();
+                }
+                break;
+            
+            case KEY_LEFT:
+                if(g.x > 0) {
+                    g.x -= 1;
+                    show_cursor();
+                } else {
+                    g.x = 8;
+                    show_cursor();
+                }
+                break;
+            
+            case KEY_RIGHT:
+                if(g.x < 8) {
+                    g.x += 1;
+                    show_cursor();
+                } else {
+                    g.x = 0;
+                    show_cursor();
+                }
+                break;
+            
+            case '1' ... '9': 
+                if(g.copyBoard[g.y][g.x] == 0) {
+                    g.board[g.y][g.x] = ch - 48;
+                    draw_numbers();
+                    hide_banner();
+                    show_cursor();
+                }
+                break;
+
+            case '0': case '.': case KEY_BACKSPACE: case KEY_DC:
+                if(g.copyBoard[g.y][g.x] == 0) {
+                    g.board[g.y][g.x] = 0;
+                    draw_numbers();
+                    hide_banner();
+                    show_cursor();
+                }
+                break;
+
+
+            // let user manually redraw screen with ctrl-L
+            case CTRL('l'):
+                redraw_all();
+                break;
+        }
+
+        // log input (and board's state) if any was received this iteration
+        if (ch != ERR)
+            log_move(ch);
+    }
+    while (ch != 'Q');
+    
+}
 
 /*
  * Designed to handles signals (e.g., SIGWINCH).
@@ -497,6 +498,12 @@ load_board(void)
     {
         fclose(fp);
         return false;
+    }
+
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 9; j++) {
+            g.copyBoard[i][j] = g.board[i][j];
+        }
     }
 
     // w00t

@@ -228,6 +228,14 @@ main(int argc, char *argv[])
                         if(y == top + j && x == (left + j + 1 * i) - j) {
                             x += 2;
                         }
+
+                        if(y == top + j && x == (left + 4 * 2) + 2) {
+                            x -= 2;
+                        }
+
+                        if(y == top + j && x == (left + 4 * 3) + 6) {
+                            x -= 2;
+                        } 
                     }
                 }
                 x -= 2;
@@ -235,11 +243,19 @@ main(int argc, char *argv[])
                 break;
 
             case KEY_RIGHT:
-                for(int i = 0; i <= 3; i++) {
+                for(int i = 0; i < 6; i++) {
                     for(int j = 0; j <= 12; j++) {
                         if(y == top + j && x == (left + i + 10 * i)) {
                             x -= 2;
                         }
+
+                        if(y == top + j && x == (left + 3 * 2)) {
+                            x += 2;
+                        }
+
+                        if(y == top + j && x == (left + 4 * 3) + 2) {
+                            x += 2;
+                        } 
                     }
                 }
                 x += 2;

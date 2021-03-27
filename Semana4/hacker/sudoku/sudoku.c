@@ -64,8 +64,9 @@ void show_cursor(void);
 void shutdown(void);
 bool startup(void);
 void movement(int max);
-bool column_check(int y);
-bool row_check(int x);
+bool column_check(int op);
+bool row_check(int op);
+bool section_check(int op);
 
 
 /*
@@ -169,7 +170,7 @@ main(int argc, char *argv[])
     return 0;
 }
 
-bool column_check(int y) {
+bool column_check(int op) {
 
     int column[9];
 
@@ -177,9 +178,9 @@ bool column_check(int y) {
         for(int j = 0; j < 9; j++) {
             column[j] = g.board[j][i];
             for(int k = 0; k < j; k++) {
-                if(y == 1 && column[k] == column[j] && column[k] != 0) {
+                if(op == 1 && column[k] == column[j] && column[k] != 0) {
                     return false;
-                } else if(y != 1 && column[k] == column[j]) {
+                } else if(op != 1 && column[k] == column[j]) {
                     return false;
                 }
             }
@@ -190,7 +191,7 @@ bool column_check(int y) {
 
 }
 
-bool row_check(int x) {
+bool row_check(int op) {
     
     int row[9];
 
@@ -198,11 +199,37 @@ bool row_check(int x) {
         for(int j = 0; j < 9; j++) {
             row[j] = g.board[i][j];
             for(int k = 0; k < j; k++) {
-               if(x == 1 && row[k] == row[j] && row[k] != 0) {
+               if(op == 1 && row[k] == row[j] && row[k] != 0) {
                     return false;
-                } else if(x != 1 && row[k] == row[j]) {
+                } else if(op != 1 && row[k] == row[j]) {
                     return false;
                 } 
+            }
+        }
+    }
+
+    return true;
+}
+
+bool section_check(int op) {
+    int section[10];
+
+    for(int x = 0; x < 7; x = x +3) {
+        for(int y = 0; y < 7; y = y +3) {
+            memset(&section[0], 0, sizeof(section));
+
+            for(int i = x; i < x + 3; i++) {
+                for(int j = x; j < x + 3; j++) {
+                    if(op == 1 && g.board[i][j] != 0 && section[g.board[i][j]] == 1) {
+                        return false;
+                    }
+
+                    if(op != 1 && (g.board[i][j] == 0 || section[g.board[i][j]] == 1)) {     
+                        return false;
+                    }
+
+                    section[g.board[i][j]] = 1;
+                }
             }
         }
     }
@@ -442,7 +469,7 @@ void movement(int max) {
 
                     g.board[g.y][g.x] = ch - 48;
                     draw_numbers();
-                    if(row_check(1) || column_check(1))
+                    if(row_check(1) || column_check(1) || section_check(1))
                     hide_banner();
                     show_cursor();
                 }

@@ -65,7 +65,7 @@ void shutdown(void);
 bool startup(void);
 void movement(int max);
 bool column_check(int y);
-bool row_check();
+bool row_check(int x);
 
 
 /*
@@ -178,10 +178,8 @@ bool column_check(int y) {
             column[j] = g.board[j][i];
             for(int k = 0; k < j; k++) {
                 if(y == 1 && column[k] == column[j] && column[k] != 0) {
-                    show_banner("teste");
                     return false;
                 } else if(y != 1 && column[k] == column[j]) {
-                    show_banner("teste");
                     return false;
                 }
             }
@@ -192,8 +190,24 @@ bool column_check(int y) {
 
 }
 
-bool row_check() {
-    return false;
+bool row_check(int x) {
+    
+    int row[9];
+
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 9; j++) {
+            row[j] = g.board[i][j];
+            for(int k = 0; k < j; k++) {
+               if(x == 1 && row[k] == row[j] && row[k] != 0) {
+                    return false;
+                } else if(x != 1 && row[k] == row[j]) {
+                    return false;
+                } 
+            }
+        }
+    }
+
+    return true;
 }
 
 
@@ -428,7 +442,7 @@ void movement(int max) {
 
                     g.board[g.y][g.x] = ch - 48;
                     draw_numbers();
-                    if(column_check(1))
+                    if(row_check(1) || column_check(1))
                     hide_banner();
                     show_cursor();
                 }

@@ -63,7 +63,9 @@ void show_banner(char *b);
 void show_cursor(void);
 void shutdown(void);
 bool startup(void);
-void movement(int x, int y, int max);
+void movement(int max);
+bool column_check(int y);
+bool row_check();
 
 
 /*
@@ -148,12 +150,12 @@ main(int argc, char *argv[])
     }
     redraw_all();
 
-    // let the user play!
-    int x = g.left + 2 + 2*(g.x + g.x/3);
-    int y = g.top + g.y + 1 + g.y/3;
+    // // let the user play!
+    // int x = g.left + 2 + 2*(g.x + g.x/3);
+    // int y = g.top + g.y + 1 + g.y/3;
 
     // determine where top-left corner of board belongs 
-    movement(x, y, max);
+    movement(max);
 
     // shut down ncurses
     shutdown();
@@ -165,6 +167,33 @@ main(int argc, char *argv[])
     // that's all folks
     printf("\nkthxbai!\n\n");
     return 0;
+}
+
+bool column_check(int y) {
+
+    int column[9];
+
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 9; j++) {
+            column[j] = g.board[j][i];
+            for(int k = 0; k < j; k++) {
+                if(y == 1 && column[k] == column[j] && column[k] != 0) {
+                    show_banner("teste");
+                    return false;
+                } else if(y != 1 && column[k] == column[j]) {
+                    show_banner("teste");
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+
+}
+
+bool row_check() {
+    return false;
 }
 
 
@@ -312,7 +341,7 @@ draw_numbers(void)
 * Draw the player movement
 */
 
-void movement(int x, int y, int max) {
+void movement(int max) {
     int ch = 0;
 
     int maxy, maxx;
@@ -347,8 +376,6 @@ void movement(int x, int y, int max) {
 
             // restart current game
             case 'R':
-                x = g.left + 2 + 2*(g.x + g.x/3);
-                y = g.top + g.y + 1 + g.y/3;
                 if (!restart_game())
                 {
                     shutdown();
@@ -398,8 +425,10 @@ void movement(int x, int y, int max) {
             
             case '1' ... '9': 
                 if(g.copyBoard[g.y][g.x] == 0) {
+
                     g.board[g.y][g.x] = ch - 48;
                     draw_numbers();
+                    if(column_check(1))
                     hide_banner();
                     show_cursor();
                 }

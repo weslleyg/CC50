@@ -68,6 +68,10 @@ bool column_check(int op);
 bool row_check(int op);
 bool section_check(int op);
 bool game_won(void);
+void game_warn(void);
+bool column(int x);
+bool row(int y);
+bool section_square(int x, int y);
 
 
 /*
@@ -170,6 +174,64 @@ main(int argc, char *argv[])
     return 0;
 }
 
+bool column(int x) {
+    int column[9];
+
+    for(int i = 0; i < 9; i++) {
+        column[i] = g.board[i][x];
+        for(int j = 0; j < i; j++) {
+            if(column[j] != 0 && column[j] == column[i]) {
+                hide_banner();
+                show_banner("You have a column issue");
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool row(int y) {
+    int row[9];
+
+    for(int i = 0; i < 9; i++) {
+        row[i] = g.board[y][i];
+        for(int j = 0; j < i; j++) {
+            if(row[j] != 0 && row[j] == row[i]) {
+                hide_banner();
+                show_banner("You have a row issue");
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool section_square(int x, int y) {
+    int square[10];
+
+    if(x < 3) {
+        x = 0;
+    }
+    if(y < 3) {
+        y = 0;
+    }
+    x = x - (x % 3);
+    y = y - (y % 3);
+    memset(&square[0], 0, sizeof(square));
+
+    for(int i = y; i < y + 3; y++) {
+        for(int j = x; j < x + 3; j++) {
+            if(g.board[i][j] != 0 && square[g.board[i][j]] == 1) {
+                return false;
+            }
+
+            square[g.board[i][j]] = 1;
+        }
+    }
+
+    return true;
+}
+
 bool column_check(int op) {
 
     int column[9];
@@ -250,6 +312,24 @@ bool game_won(void) {
         return false;
     }
 }
+
+void game_warn(void) {
+    if(!column_check(1))
+    show_banner("You have a column problem");
+    if(!row_check(1))
+    show_banner("You have a row problem");
+    if(!section_check(1))
+    show_banner("You have a section square problem");
+    if(!column_check(1) && !row_check(1))
+    show_banner("You have a column and row problem");
+    if(!column_check(1) && !section_check(1))
+    show_banner("You have a column and section square problem");
+    if(!row_check(1) && !section_check(1))
+    show_banner("You have a row and section square problem");
+    if(!column_check(1) && !row_check(1) && !section_check(1))
+    show_banner("You have a column, row and section square problem");
+    show_cursor();
+} 
 
 
 /*
@@ -384,6 +464,8 @@ draw_numbers(void)
     {
         for (int j = 0; j < 9; j++)
         {
+            if(!column(j) && !row(i) && !section_square(i, j))
+            attron(COLOR_PAIR(FG_LOGO));
             // determine char
             char c = (g.board[i][j] == 0) ? '.' : g.board[i][j] + '0';
             mvaddch(g.top + i + 1 + i/3, g.left + 2 + 2*(j + j/3), c);
@@ -487,6 +569,7 @@ void movement(int max) {
                     show_cursor();
                 }
                 game_won();
+                game_warn();
                 break;
 
             case '0': case '.': case KEY_BACKSPACE: case KEY_DC:
@@ -496,6 +579,7 @@ void movement(int max) {
                     hide_banner();
                     show_cursor();
                 }
+                game_warn();
                 break;
 
 

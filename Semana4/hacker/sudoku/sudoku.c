@@ -67,6 +67,7 @@ void movement(int max);
 bool column_check(int op);
 bool row_check(int op);
 bool section_check(int op);
+bool game_won(void);
 
 
 /*
@@ -150,7 +151,6 @@ main(int argc, char *argv[])
         return 6;
     }
     redraw_all();
-
     // // let the user play!
     // int x = g.left + 2 + 2*(g.x + g.x/3);
     // int y = g.top + g.y + 1 + g.y/3;
@@ -235,6 +235,20 @@ bool section_check(int op) {
     }
 
     return true;
+}
+
+bool game_won(void) {
+    if(column_check(0) && row_check(0) && section_check(0)) {
+        show_banner("You won!");
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 9; j++) {
+                g.board[i][j] = 9;
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
@@ -466,13 +480,13 @@ void movement(int max) {
             
             case '1' ... '9': 
                 if(g.copyBoard[g.y][g.x] == 0) {
-
                     g.board[g.y][g.x] = ch - 48;
                     draw_numbers();
-                    if(row_check(1) || column_check(1) || section_check(1))
+                    if(column_check(1) || row_check(1) || section_check(1))
                     hide_banner();
                     show_cursor();
                 }
+                game_won();
                 break;
 
             case '0': case '.': case KEY_BACKSPACE: case KEY_DC:
@@ -617,6 +631,7 @@ log_move(int ch)
 void
 redraw_all(void)
 {
+    game_won();
     // reset ncurses
     endwin();
     refresh();

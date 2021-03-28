@@ -297,21 +297,6 @@ bool section_check(int op) {
     return true;
 }
 
-bool game_won(void) {
-    if(column_check(0) && row_check(0) && section_check(0)) {
-        show_banner("You won!");
-        for(int i = 0; i < 9; i++) {
-            for(int j = 0; j < 9; j++) {
-                g.board[i][j] = 9;
-            }
-        }
-        return true;
-    } 
-    
-    else 
-    return false;
-}
-
 /*
  * Draw's the game's board.
  */
@@ -665,6 +650,21 @@ load_board(void)
     return true;
 }
 
+bool game_won(void) {
+    if(column_check(0) && row_check(0) && section_check(0)) {
+        show_banner("You won!");
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 9; j++) {
+                g.copyBoard[i][j] = 9;
+            }
+        }
+        return true;
+    } 
+    
+    else 
+    return false;
+}
+
 
 /*
  * Logs input and board's state to log.txt to facilitate automated tests.
@@ -868,7 +868,7 @@ void game_warn(void) {
     show_banner("You have a column and section square problem");
     if(!row_check(1) && !section_check(1))
     show_banner("You have a row and section square problem");
-    if(!column_check(1) && !row_check(1) && !section_check(1))
+    if(!row_check(1) && !column_check(1) && !section_check(1))
     show_banner("You have a column, row and section square problem");
     show_cursor();
 } 

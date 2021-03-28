@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
+#include <unistd.h> 
 
 // macro for processing control characters
 #define CTRL(x) ((x) & ~0140)
@@ -206,20 +206,18 @@ bool row(int y) {
     return true;
 }
 
-bool section_square(int x, int y) {
+bool section_square(int y, int x) {
     int square[10];
 
-    if(x < 3) {
-        x = 0;
-    }
-    if(y < 3) {
-        y = 0;
-    }
+    if(x < 3)
+    x = 0;
+    if(y < 3)
+    y = 0;
     x = x - (x % 3);
     y = y - (y % 3);
     memset(&square[0], 0, sizeof(square));
 
-    for(int i = y; i < y + 3; y++) {
+    for(int i = y; i < y + 3; i++) {
         for(int j = x; j < x + 3; j++) {
             if(g.board[i][j] != 0 && square[g.board[i][j]] == 1) {
                 return false;
@@ -276,12 +274,12 @@ bool row_check(int op) {
 bool section_check(int op) {
     int section[10];
 
-    for(int x = 0; x < 7; x = x +3) {
-        for(int y = 0; y < 7; y = y +3) {
+    for(int x = 0; x < 7; x = x + 3) {
+        for(int y = 0; y < 7; y = y + 3) {
             memset(&section[0], 0, sizeof(section));
 
             for(int i = x; i < x + 3; i++) {
-                for(int j = x; j < x + 3; j++) {
+                for(int j = y; j < y + 3; j++) {
                     if(op == 1 && g.board[i][j] != 0 && section[g.board[i][j]] == 1) {
                         return false;
                     }
@@ -308,29 +306,11 @@ bool game_won(void) {
             }
         }
         return true;
-    } else {
-        return false;
-    }
+    } 
+    
+    else 
+    return false;
 }
-
-void game_warn(void) {
-    if(!column_check(1))
-    show_banner("You have a column problem");
-    if(!row_check(1))
-    show_banner("You have a row problem");
-    if(!section_check(1))
-    show_banner("You have a section square problem");
-    if(!column_check(1) && !row_check(1))
-    show_banner("You have a column and row problem");
-    if(!column_check(1) && !section_check(1))
-    show_banner("You have a column and section square problem");
-    if(!row_check(1) && !section_check(1))
-    show_banner("You have a row and section square problem");
-    if(!column_check(1) && !row_check(1) && !section_check(1))
-    show_banner("You have a column, row and section square problem");
-    show_cursor();
-} 
-
 
 /*
  * Draw's the game's board.
@@ -464,8 +444,12 @@ draw_numbers(void)
     {
         for (int j = 0; j < 9; j++)
         {
-            if(!column(j) && !row(i) && !section_square(i, j))
+            if(has_colors() && g.board[i][j] != 0 && g.board[i][j] == g.copyBoard[i][j])
+            attron(COLOR_PAIR(BG_BANNER));
+            if(has_colors() && (!column(j) && !row(i) && !section_square(i, j)))
             attron(COLOR_PAIR(FG_LOGO));
+            if(game_won() && has_colors())
+            attron(COLOR_PAIR(COLOR_YELLOW));
             // determine char
             char c = (g.board[i][j] == 0) ? '.' : g.board[i][j] + '0';
             mvaddch(g.top + i + 1 + i/3, g.left + 2 + 2*(j + j/3), c);
@@ -570,12 +554,14 @@ void movement(int max) {
                 }
                 game_won();
                 game_warn();
+
                 break;
 
             case '0': case '.': case KEY_BACKSPACE: case KEY_DC:
                 if(g.copyBoard[g.y][g.x] == 0) {
                     g.board[g.y][g.x] = 0;
                     draw_numbers();
+                    if(column_check(1) || row_check(1) || section_check(1))
                     hide_banner();
                     show_cursor();
                 }
@@ -868,3 +854,21 @@ startup(void)
     // w00t
     return true;
 }
+
+void game_warn(void) {
+    if(!column_check(1))
+    show_banner("You have a column problem");
+    if(!row_check(1))
+    show_banner("You have a row problem");
+    if(!section_check(1))
+    show_banner("You have a section square problem");
+    if(!column_check(1) && !row_check(1))
+    show_banner("You have a column and row problem");
+    if(!column_check(1) && !section_check(1))
+    show_banner("You have a column and section square problem");
+    if(!row_check(1) && !section_check(1))
+    show_banner("You have a row and section square problem");
+    if(!column_check(1) && !row_check(1) && !section_check(1))
+    show_banner("You have a column, row and section square problem");
+    show_cursor();
+} 

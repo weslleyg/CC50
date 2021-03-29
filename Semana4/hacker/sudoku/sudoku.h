@@ -29,5 +29,15 @@
 #define FG_LOGO COLOR_GREEN
 #define BG_LOGO COLOR_BLACK
 
+//in game colors
+#define FG_INIT COLOR_BLUE
+#define BG_INIT COLOR_BLACK
+
+#define FG_WON COLOR_GREEN
+#define BG_WON COLOR_BLACK
+
+#define FG_WARN COLOR_RED
+#define BG_WARN COLOR_BLACK
+
 // nicknames for pairs of colors
-enum { PAIR_BANNER = 1, PAIR_GRID, PAIR_BORDER, PAIR_LOGO };
+enum { PAIR_BANNER = 1, PAIR_GRID, PAIR_BORDER, PAIR_LOGO, PAIR_WON, PAIR_INIT, PAIR_WARN};

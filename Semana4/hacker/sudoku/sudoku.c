@@ -430,14 +430,16 @@ draw_numbers(void)
         for (int j = 0; j < 9; j++)
         {
             if(has_colors() && g.board[i][j] != 0 && g.board[i][j] == g.copyBoard[i][j])
-            attron(COLOR_PAIR(BG_BANNER));
-            if(has_colors() && (!column(j) && !row(i) && !section_square(i, j)))
-            attron(COLOR_PAIR(FG_LOGO));
+            attron(COLOR_PAIR(PAIR_INIT));
+            if(has_colors() && (!column(j) || !row(i) || !section_square(i, j)))
+            attron(COLOR_PAIR(PAIR_WARN));
             if(game_won() && has_colors())
-            attron(COLOR_PAIR(COLOR_YELLOW));
+            attron(COLOR_PAIR(PAIR_WON));
             // determine char
             char c = (g.board[i][j] == 0) ? '.' : g.board[i][j] + '0';
             mvaddch(g.top + i + 1 + i/3, g.left + 2 + 2*(j + j/3), c);
+            if(has_colors())
+            attroff(COLOR_PAIR(PAIR_INIT));
             refresh();
         }
     }
@@ -820,7 +822,10 @@ startup(void)
         if (init_pair(PAIR_BANNER, FG_BANNER, BG_BANNER) == ERR ||
             init_pair(PAIR_GRID, FG_GRID, BG_GRID) == ERR ||
             init_pair(PAIR_BORDER, FG_BORDER, BG_BORDER) == ERR ||
-            init_pair(PAIR_LOGO, FG_LOGO, BG_LOGO) == ERR)
+            init_pair(PAIR_LOGO, FG_LOGO, BG_LOGO) == ERR ||
+            init_pair(PAIR_INIT, FG_INIT, BG_INIT) == ERR ||
+            init_pair(PAIR_WARN, FG_WARN, BG_WARN) == ERR ||
+            init_pair(PAIR_WON, FG_WON, BG_WON) == ERR)
         {
             endwin();
             return false;

@@ -4,10 +4,18 @@ Perguntas
 1. Qual destes formatos suporta animação?
 2. Qual é a diferença entre a compressão com perdas e sem perdas?
 3. Qual destes formatos é comprimido com perdas?
+4. O que acontece, tecnicamente falando, quando um arquivo é removido de um sistema de
+arquivos FAT?
+5. O que alguém como você pode fazer para garantir (com alta probabilidade) que os arquivos que
+você excluir não poderão ser recuperados?
 
 Respostas
 
-0. Todos suportam 256 cores RGB.
+0. GIF suporta 8 bits e BMP, JPEG e PNG suportam 24 bits.
 1. .GIF
 2. Perda de qualidade e tamanho do arquivo.
 3. JPG, e GIF
+4. Ele reescreve o metadata que aponta para o arquivo e mantem o bloco de disco
+contendo o conteudo do arquivo intacto.
+5. Utilizando programas para limpar o disco.
+

@@ -1,0 +1,13 @@
+Perguntas
+
+0. Quantas cores diferentes cada formato suporta?
+1. Qual destes formatos suporta animação?
+2. Qual é a diferença entre a compressão com perdas e sem perdas?
+3. Qual destes formatos é comprimido com perdas?
+
+Respostas
+
+0. Todos suportam 256 cores RGB.
+1. .GIF
+2. Perda de qualidade e tamanho do arquivo.
+3. JPG, e GIF

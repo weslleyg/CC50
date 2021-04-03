@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
 
 int main(int argc, char *argv[]) {
 
@@ -16,13 +18,19 @@ int main(int argc, char *argv[]) {
       return 2;
     }
 
-    char *buffer;
-    fread(&buffer, 512, 1, inptr);
-
+    uint8_t buffer[512];
+    uint8_t checkheader1[4] = {0xff, 0xd8, 0xff, 0xe0};
+    uint8_t checkheader2[4] = {0xff, 0xd8, 0xff, 0xe1};
+ 
     if(buffer[0] == 0xff &&
        buffer[1] == 0xd8 &&
        buffer[2] == 0xff &&
-       (buffer[3] & 0xf0) == 0xe0) {
-         printf("tste");
-       }
+       (buffer[3] & 0xf0) == 0xe0);
+    
+    char *filename;
+
+    sprintf(filename, "#03i.jpg", 2);
+
+    FILE *img = fopen(filename, "w");
+    
 }

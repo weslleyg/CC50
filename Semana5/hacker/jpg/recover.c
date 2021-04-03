@@ -10,27 +10,56 @@ int main(int argc, char *argv[]) {
       return 1;
     }
 
-    char *infile = argv[2];
+    char *infile = argv[1];
 
-    FILE *inptr = fopen(infile, "r");
+    FILE* inptr = fopen(infile, "r");
     if(inptr == NULL) {
+      fclose(inptr);
       printf("Could not open %s\n", inptr);
       return 2;
     }
 
+    int jpgcount = 0;
+    int open = 0;
+
     uint8_t buffer[512];
     uint8_t checkheader1[4] = {0xff, 0xd8, 0xff, 0xe0};
     uint8_t checkheader2[4] = {0xff, 0xd8, 0xff, 0xe1};
+    uint8_t check[4];
  
-    if(buffer[0] == 0xff &&
-       buffer[1] == 0xd8 &&
-       buffer[2] == 0xff &&
-       (buffer[3] & 0xf0) == 0xe0);
-    
-    char *filename;
+    FILE* outptr;
+    fread(buffer, 512, 1, inptr);
 
-    sprintf(filename, "#03i.jpg", 2);
+    while(fread(buffer, 512, 1, inptr) > 0) {
+      for(int i = 0; i < 4; i++) {
+        check[i] = buffer[i];
+      }
 
-    FILE *img = fopen(filename, "w");
-    
+      if(memcmp(checkheader1, check, 4) == 0 || memcmp(checkheader2, check, sizeof(check)) == 0) {
+          char filename[8];
+          sprintf(filename, "%03i", jpgcount);
+
+          if(open == 0) {
+            outptr = fopen(filename, "w");
+            fwrite(buffer, sizeof(buffer), 1, outptr);
+            open = 1;
+          }
+
+          if(open == 1) {
+            fclose(outptr);
+            outptr = fopen(filename, "w");
+            fwrite(buffer, sizeof(buffer), 1, outptr);
+            jpgcount++;
+          }
+      } else if(open == 1) {
+        fwrite(buffer, sizeof(buffer), 1, outptr);
+      }
+    }
+
+    if(outptr) {
+      fclose(outptr);
+    }
+
+    fclose(inptr);
+    return 0;
 }

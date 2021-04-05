@@ -8,6 +8,20 @@ Perguntas
 arquivos FAT?
 5. O que alguém como você pode fazer para garantir (com alta probabilidade) que os arquivos que
 você excluir não poderão ser recuperados?
+6. O que é stdint.h?
+7. Porque se usa uint8_t, uint32_t, int32_t e uint16_t em um programa?
+8. Quantos bytes tem um BYTE, uma DWORD, um LONG e uma WORD, respectivamente?1
+9. O que (em ASCII, decimal ou hexadecimal) devem ser os dois primeiros bytes de qualquer
+arquivo BMP?2
+10. Qual é a diferença entre bfSize e biSize?
+11. O que significa se biHeight for negativo?
+12. Que campo em BITMAPINFOHEADER especifica a cor do BMP (bits por pixel)?
+13. Por que fopen pode retornar NULL em copy.c:32?
+14. Porque é que o terceiro argumento de fread é sempre 1 em nosso código?
+15. Qual o valor que copy.c:69 atribui a padding se bi.biWidth é 3?
+16. O que é que fseek faz?
+17. O que é SEEK_CUR?
+18. Quem fez isso? E onde? E com que arma?
 
 Respostas
 
@@ -18,4 +32,17 @@ Respostas
 4. Ele reescreve o metadata que aponta para o arquivo e mantem o bloco de disco
 contendo o conteudo do arquivo intacto.
 5. Utilizando programas para limpar o disco.
-
+6. Uma biblioteca padrão de inteiros do C.
+7. Para definir a quantidade específica de bits de um inteiro.
+8. BYTE contem 1 byte, DWORD e LONG contem 4 bytes e WORD contem 2 bytes.
+9. Um inteiro de 16 bits do tipo WORD que contem o nome de bfType.
+10. bfSize é o tamanho em bits do bitmap do arquivo, e o biSize é o numero
+de bytes que a estrutura requer.
+11. Isso indica um DBI de cima para baixo e não poderá ser comprimido.
+12. biBitCount
+13. Porque o arquivo pode não existir ou ser de formato diferente.
+14. Porque é o numero de itens do dado que é lido.
+15. Ele zera o valor de padding.
+16. Ele limpa o padding.
+17. É a posição atual.
+18. Foi o professor Plum no lounge com uma vela.

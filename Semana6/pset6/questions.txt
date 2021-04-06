@@ -1,0 +1,25 @@
+Perguntas
+
+0. O que é pneumoultramicroscopicossilicovulcanoconiose?
+1. De acordo com a sua página do manual, o que getrusage fazer?
+2. De acordo com a mesma página, quantos membros tem uma variável do tipo struct rusage?
+3. Porque você acha que passamos before e after por referência (em vez de por valor) para
+calculate, mesmo que nós não estejamos mudando os seus conteúdos?
+4. Explicar com a maior precisão possível, em um parágrafo ou mais, como main age para ler as
+palavras de um arquivo. Em outras palavras, nos convença de que você realmente entende
+como o for loop dessa função funciona.
+5. Porque você acha que nós usamos fgetc para ler cada caracter de cada palavra ao vez ao
+invés de fscanf com uma string formatada como "%s" para ler palavras inteiras de uma
+vez? Dito de outra forma, que problemas poderiam surgir ao depender de fscanf para
+realizar essa tarefa?
+
+Respostas
+
+0. É uma doença respiratória, causada pela inalação das cinzas do vulcão.
+1. Retorna o processo de maior prioridade especificado por quando e quem.
+2. 2 membros, o user time e o system time.
+3. 
+
+
+Leitura recomendada.
+-> Seções 18 - 20, 27 - 30, 33, 36 e 37 de http://informatica.hsw.uol.com.br/programacao-em-c.htm

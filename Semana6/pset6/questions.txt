@@ -18,7 +18,14 @@ Respostas
 0. É uma doença respiratória, causada pela inalação das cinzas do vulcão.
 1. Retorna o processo de maior prioridade especificado por quando e quem.
 2. 2 membros, o user time e o system time.
-3. 
+3. Porque ambas são uma struct
+4. É utilizado um loop for que lê cada character e string com a função fgetc até o final do arquivo
+e verifica se cada string é um caracter alfabético e apostrofes e depois verifica se a palavra é maior
+que LENGTH e consome o restante da string, se for um digito consome o restante de uma string alphanumerica
+e se for uma palavra encontrada adiciona ++ no counter de words e checa a ortografia, atualiza o bechmark
+e escreve a palavra correta e zera o index para verificar uma nova palavra.
+5. Por que o fscanf funciona com strings formatadas em um determinado padrão, e retorna EOF quando não
+consegue ler a string nesse padrão.
 
 
 Leitura recomendada.

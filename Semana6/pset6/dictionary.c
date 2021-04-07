@@ -8,8 +8,16 @@
  ***************************************************************************/
 
 #include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "dictionary.h"
+
+typedef struct node 
+{
+    char word[LENGTH + 1];
+    struct node *next;
+} node;
 
 
 /*
@@ -31,8 +39,30 @@ check(const char *word)
 bool
 load(const char *dict)
 {
-    // TODO
-    return false;
+    FILE *file = fopen(dict,"r");
+    if(!file) 
+    {
+        unload();
+        return 1;
+    }
+
+    char word[LENGTH + 1];
+    int index;
+
+    while(fscanf(file, "%s", word) != EOF) 
+    {
+        node *n = malloc(sizeof(node));
+        if(n == NULL) {
+            unload();
+            return 1;
+        }
+
+        strcpy(n->word, word);
+    }
+    fclose(file);
+
+
+    return true;
 }
 
 

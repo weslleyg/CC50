@@ -24,6 +24,9 @@
 
 bool check(const char *word);
 
+unsigned int hashFunc(const char *word);
+
+int strcasecmp(const char *s1, const char *s2);
 
 /*
  * Loads dict into memory.  Returns true if successful else false.

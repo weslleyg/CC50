@@ -1,0 +1,27 @@
+php:
+  build: .
+  ports:
+   - "80:80"
+   - "443:443"
+  volumes:
+   - ./www:/var/www/html
+  links:
+   - db
+   - db_pma
+db_pma:
+  image: phpmyadmin/phpmyadmin:latest
+  links:
+  - db
+  ports:
+  - 8082:80
+  environment:
+    MYSQL_ROOT_PASSWORD: phprs
+    PMA_USER: root
+    PMA_PASSWORD: phprs
+db:
+  image: mysql:5.7
+  volumes:
+   - /var/lib/mysql
+  environment:
+   - MYSQL_ROOT_PASSWORD=phprs
+   - MYSQL_DATABASE=phprs

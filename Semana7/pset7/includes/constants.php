@@ -17,10 +17,10 @@
     define("DB_USER", "root");
 
     // a senha do seu banco de dados
-    define("DB_PASS", "");
+    define("DB_PASS", "phprs");
 
     // o servidor onde o seu banco de dados está hospedado
-    define("DB_SERVER", "localhost");
+    define("DB_SERVER", "db");
 
     // URL do Yahoo Finanças
     define("YAHOO", "http://download.finance.yahoo.com/d/quotes.csv?f=snl1d1t1c1ohg&s=");

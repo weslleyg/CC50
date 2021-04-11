@@ -15,7 +15,7 @@
     error_reporting(E_ALL ^ E_NOTICE);
 
     // enable sessions, restricting cookie to /~username/pset7/
-    if (preg_match("{^(/~[^/]+/pset7/)}", $_SERVER["REQUEST_URI"], $matches))
+    if (preg_match("{^(/~[^/]+/)}", $_SERVER["REQUEST_URI"], $matches))
         session_set_cookie_params(0, $matches[1]);
     session_start();
 
@@ -37,12 +37,12 @@
     if (DB_PASS == "") apologize("You left DB_PASS blank.");
 
     // connect to database server
-    if (($connection = @mysql_connect(DB_SERVER, DB_USER, DB_PASS)) === FALSE)
+    if (($connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS)) === FALSE)
         apologize("Não foi possível conectar ao banco de dados. " .
          "<br>Cheque os valores de DB_NAME, DB_PASS, e DB_USER em constants.php.");
 
     // select database
-    if (@mysql_select_db(DB_NAME, $connection) === FALSE)
+    if (mysqli_select_db($connection, DB_NAME) === FALSE)
         apologize("Não foi possível selecionar o banco de dados (" . DB_NAME . ").");
 
 ?>

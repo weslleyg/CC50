@@ -6,21 +6,30 @@
     // escape username and password for safety
     $username = mysqli_real_escape_string($connection, $_POST["username"]);
     $password = mysqli_real_escape_string($connection, $_POST["password"]);
+    $password2 = mysqli_real_escape_string($connection, $_POST["password2"]);
+
+    if(strcmp($password, $password2))
+      apologize("As senhas não correspondem!");
+    
+    if(empty($username) || empty($password) || empty($password2))
+      apologize("Espaços não preenchidos");
 
     // prepare SQL
-    $sql = "SELECT uid FROM users WHERE username='$username' AND password='$password'";
+    $sql = "INSERT INTO users (username, password, cash) VALUES('$username', '$password', 10000.00)";
 
     // execute query
     $result = mysqli_query($connection, $sql);
 
-    // if we found a row, remember user and redirect to portfolio
-    if (mysqli_num_rows($result) == 1)
-    {
-        // grab row
-        $row = mysqli_fetch_array($result);
+    if($result == false)
+      apologize("O usuário já existe!");
 
+    $uid = mysqli_insert_id($connection);
+
+    // if we found a row, remember user and redirect to portfolio
+    if ($uid != 0)
+    {
         // cache uid in session
-        $_SESSION["uid"] = $row["uid"];
+        $_SESSION["uid"] = $uid;
 
         // redirect to portfolio
         redirect("index.php");

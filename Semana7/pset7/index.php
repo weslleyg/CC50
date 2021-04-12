@@ -1,7 +1,7 @@
 <?
 
     // require common code
-    require_once("includes/common.php"); 
+    require_once("includes/common.php");
 
 ?>
 
@@ -21,9 +21,14 @@
       <a href="index.php"><img alt="CC50 Finanças" src="images/logo.png" style="height: 200px;"></a>
     </div>
 
-    <div id="middle">
-      <img alt="Em construção" height="299" src="images/construction.gif" width="404">
-    </div>
+    <? $result = mysqli_query($connection, "SELECT symbol, shares FROM stocks WHERE userId = {$_SESSION["uid"]}"); ?>
+    <? while ($row = mysqli_fetch_array($result)): ?>
+      <? $s = lookup($row["symbol"]); ?>
+      <tr>
+        <td><?= $s->name ?></td>
+        <td><?= $row["shares"] ?></td>
+      </tr>
+    <? endwhile ?>
 
     <div id="bottom">
       <a href="logout.php">log out</a>

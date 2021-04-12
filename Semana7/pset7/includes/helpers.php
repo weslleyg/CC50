@@ -86,32 +86,38 @@
             return NULL;
 
         // open connection to Yahoo
-        if (($fp = @fopen(YAHOO . $symbol, "r")) === FALSE)
+        if (($fp = @fopen("https://cloud.iexapis.com/stable/stock/{$symbol}/quote?token=API_KEY", "r")) === FALSE)
             return NULL;
 
         // download first line of CSV file
-        if (($data = fgetcsv($fp)) === FALSE || count($data) == 1)
+        if (($json = @fgets($fp)) === FALSE)
             return NULL;
 
         // close connection to Yahoo
         fclose($fp);
 
+        //convert json to object class
+        $data = json_decode($json);
+
+        //get latest price
+        $latestPrice = $data->latestPrice;
+
         // ensure symbol was found
-        if ($data[2] == 0.00)
+        if ($latestPrice == 0.00)
             return NULL;
 
         // instantiate a stock object
         $stock = new Stock();
 
         // remember stock's symbol and trades
-        $stock->symbol = $data[0];
-        $stock->name = $data[1];
-        $stock->price = $data[2];
-        $stock->time = strtotime($data[3] . " " . $data[4]);
-        $stock->change = $data[5];
-        $stock->open = $data[6];
-        $stock->high = $data[7];
-        $stock->low = $data[8];
+        $stock->symbol = $data->symbol;
+        $stock->name = $data->companyName;
+        $stock->price = $data->iexRealtimePrice;
+        $stock->time = $data->latestTime;
+        $stock->change = $data->change;
+        $stock->open = $data->open;
+        $stock->high = $data->high;
+        $stock->low = $data->low;
 
         // return stock
         return $stock;

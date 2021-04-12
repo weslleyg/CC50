@@ -22,7 +22,4 @@
     // o servidor onde o seu banco de dados está hospedado
     define("DB_SERVER", "db");
 
-    // URL do Yahoo Finanças
-    define("YAHOO", "http://download.finance.yahoo.com/d/quotes.csv?f=snl1d1t1c1ohg&s=");
-
 ?>

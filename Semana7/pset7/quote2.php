@@ -4,8 +4,11 @@
 
     $s = lookup($_POST["symbol"]);
 
-    echo("<script type='text/javascript'> console.log($s);</script>");
-
-    print($s->price);
+    if($s === NULL)
+        apologize("Ticket de ação inválido!");
 
 ?>
+
+<div style="text-align: center">
+ A ação <?= $s->name ?> atualmente custa $<?= $s->price ?>.
+</div>

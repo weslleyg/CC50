@@ -27,8 +27,11 @@
 
     if($insetion == false)
       apologize("Erro na execução! {$amount}");
-    
-      mysqli_query($connection, "UPDATE users SET cash = cash - $total WHERE uid = {$_SESSION["uid"]}");
+
+    $stockPrice = str_replace(",", ".", $s->price);
+
+    mysqli_query($connection, "INSERT INTO trades(userId, type, symbol, shares, price) VALUES ({$_SESSION["uid"]}, 'BUY', '$quote', $amount, '$stockPrice')");
+    mysqli_query($connection, "UPDATE users SET cash = cash - $total WHERE uid = {$_SESSION["uid"]}");
 ?>
 
 <div style="text-align: center">

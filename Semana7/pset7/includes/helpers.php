@@ -86,7 +86,7 @@
             return NULL;
 
         // open connection to Yahoo
-        if (($fp = @fopen("https://cloud.iexapis.com/stable/stock/{$symbol}/quote?token=API_KEY", "r")) === FALSE)
+        if (($fp = @fopen("https://cloud.iexapis.com/stable/stock/{$symbol}/quote?token=pk_671474cc63974807b226adb1ee32530c", "r")) === FALSE)
             return NULL;
 
         // download first line of CSV file

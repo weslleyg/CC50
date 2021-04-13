@@ -2,7 +2,9 @@
 
     require_once("includes/common.php");
 
-    $s = lookup($_POST["symbol"]);
+    $quote = mysqli_real_escape_string($connection, $_POST["symbol"]);
+
+    $s = lookup($quote);
 
     if($s === NULL)
         apologize("Ticket de ação inválido!");

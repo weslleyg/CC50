@@ -1,10 +1,3 @@
-<?
-
-    // require common code
-    require_once("includes/common.php");
-
-?>
-
 <!DOCTYPE html>
 
 <html>
@@ -12,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <link href="css/styles.css" rel="stylesheet" type="text/css">
-    <title>CC50 Finanças: Quote</title>
+    <title>CC50 Finanças: Buy</title>
   </head>
 
   <body>
@@ -22,15 +15,19 @@
     </div>
 
     <div id="middle">
-      <form action="quote2.php" method="post">
+      <form action="buy2.php" method="post">
         <table>
           <tr>
-            <td>Quote:</td>
+            <td>Ticket:</td>
             <td><input name="symbol" type="text" placeholder="Ex: AAPL"></td>
           </tr>
           <tr>
+            <td>Amount:</td>
+            <td><input name="shares" type="text" placeholder="Ex: 100"></td>
+          </tr>
+          <tr>
             <td></td>
-            <td><input type="submit" value="Submit"></td>
+            <td><input type="submit" value="Comprar"></td>
           </tr>
         </table>
       </form>

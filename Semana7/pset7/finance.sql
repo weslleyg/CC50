@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Tempo de geração: 13-Abr-2021 às 20:05
+-- Tempo de geração: 13-Abr-2021 às 21:48
 -- Versão do servidor: 5.7.33
 -- versão do PHP: 7.4.16
 
@@ -39,11 +39,40 @@ CREATE TABLE `stocks` (
 --
 
 INSERT INTO `stocks` (`stockId`, `userId`, `symbol`, `shares`) VALUES
-(2, 4, 'MSFT', 100),
 (3, 3, 'IBM', 400),
 (4, 4, 'NKE', 1120),
-(6, 1, 'NKE', 300),
-(10, 4, 'AAPL', 120);
+(6, 1, 'NKE', 300);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `trades`
+--
+
+CREATE TABLE `trades` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `userId` int(10) UNSIGNED NOT NULL,
+  `type` varchar(10) NOT NULL,
+  `symbol` varchar(10) NOT NULL,
+  `shares` int(10) UNSIGNED NOT NULL,
+  `price` varchar(10) NOT NULL,
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `trades`
+--
+
+INSERT INTO `trades` (`id`, `userId`, `type`, `symbol`, `shares`, `price`, `date`) VALUES
+(1, 4, 'BUY', 'AAPL', 100, '134', '2021-04-13 20:42:56'),
+(2, 4, 'BUY', 'AAPL', 100, '134', '2021-04-13 21:05:01'),
+(3, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:24:53'),
+(4, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:26:10'),
+(5, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:27:23'),
+(6, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:29:31'),
+(7, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:31:11'),
+(8, 4, 'BUY', 'AAPL', 100, '134.47', '2021-04-13 21:35:33'),
+(9, 4, 'SELL', 'AAPL', 100, '134.47', '2021-04-13 21:41:02');
 
 -- --------------------------------------------------------
 
@@ -66,7 +95,7 @@ INSERT INTO `users` (`uid`, `username`, `password`, `cash`) VALUES
 (1, 'lemon', 'helloworld', '10000.0000'),
 (2, 'luke', 'skywalker1', '10000.0000'),
 (3, 'leia', 'skywalker2', '10000.0000'),
-(4, 'pskroob', '12345', '19430.4000');
+(4, 'pskroob', '12345', '61404.8000');
 
 --
 -- Índices para tabelas despejadas
@@ -79,6 +108,13 @@ ALTER TABLE `stocks`
   ADD PRIMARY KEY (`stockId`),
   ADD UNIQUE KEY `userId` (`userId`,`symbol`),
   ADD KEY `userIdFK` (`userId`) USING BTREE;
+
+--
+-- Índices para tabela `trades`
+--
+ALTER TABLE `trades`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userIdFK` (`userId`);
 
 --
 -- Índices para tabela `users`
@@ -95,7 +131,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `stockId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `stockId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de tabela `trades`
+--
+ALTER TABLE `trades`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `users`
@@ -112,6 +154,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `stocks`
   ADD CONSTRAINT `stocks_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`uid`);
+
+--
+-- Limitadores para a tabela `trades`
+--
+ALTER TABLE `trades`
+  ADD CONSTRAINT `trades_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`uid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

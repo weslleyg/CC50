@@ -115,7 +115,7 @@
                         Name
                     </th>
                     <th class="font-semibold text-sm uppercase px-6 py-4">
-                        Price/Shares
+                        Price
                     </th>
                     <th class="font-semibold text-sm uppercase px-6 py-4 text-center">
                         Change
@@ -150,7 +150,7 @@
                     </td>
                     <td class="px-6 py-4">
                         <p class="">
-                            <?= $s->price ?>
+                            $ <?= $s->price ?>
                         </p>
                         <p class="text-gray-500 text-sm font-semibold tracking-wide">
                             <?= $s->time ?>
@@ -159,11 +159,11 @@
                     <td class="px-6 py-4 text-center">
                     <? if($s->change < 0): ?>
                         <span class="text-red-800 bg-red-200 font-semibold px-2 rounded-full">
-                            <?= $s->change ?>
+                            <?= $s->change ?>%
                         </span>
                     <? else: ?>
                         <span class="text-green-800 bg-green-200 font-semibold px-2 rounded-full">
-                            <?= $s->change ?>
+                            <?= $s->change ?>%
                         </span>
                     <? endif ?>
                     </td>
@@ -171,14 +171,14 @@
                         <? if($s->high == NULL): ?>
                             Market open
                         <? else: ?>
-                            <?= $s->high ?>
+                            $ <?= $s->high ?>
                         <? endif ?>
                     </td>
                     <td class="px-6 py-4 text-center">
                     <? if($s->low == NULL): ?>
                             Market open
                         <? else: ?>
-                            <?= $s->low ?>
+                            $ <?= $s->low ?>
                         <? endif ?>
                     </td>
                     <td class="px-6 py-4 text-center">

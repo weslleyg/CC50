@@ -11,12 +11,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Banco de dados: `finance`
 --
@@ -64,16 +58,7 @@ CREATE TABLE `trades` (
 --
 
 INSERT INTO `trades` (`id`, `userId`, `type`, `symbol`, `shares`, `price`, `date`) VALUES
-(1, 4, 'BUY', 'AAPL', 100, '134', '2021-04-13 20:42:56'),
-(2, 4, 'BUY', 'AAPL', 100, '134', '2021-04-13 21:05:01'),
-(3, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:24:53'),
-(4, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:26:10'),
-(5, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:27:23'),
-(6, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:29:31'),
-(7, 4, 'SELL', 'AAPL', 100, '134', '2021-04-13 21:31:11'),
-(8, 4, 'BUY', 'AAPL', 100, '134.47', '2021-04-13 21:35:33'),
-(9, 4, 'SELL', 'AAPL', 100, '134.47', '2021-04-13 21:41:02');
-
+(1, 4, 'BUY', 'AAPL', 100, '134', '2021-04-13 20:42:56');
 -- --------------------------------------------------------
 
 --
@@ -161,7 +146,3 @@ ALTER TABLE `stocks`
 ALTER TABLE `trades`
   ADD CONSTRAINT `trades_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`uid`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
